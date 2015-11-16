@@ -67,21 +67,21 @@ def assign_pairs(names, latest, day):
     unassigned = set(names)
     pairs = []
     while len(unassigned) > 0:
-        # print('unassigned =', unassigned)
+        #print('unassigned =', unassigned)
         n1 = unassigned.pop()
-        # print('n1 =', n1)
+        #print('n1 =', n1)
         cmap = { k:v for k, v in latest.items()
-                 if n1 in k and k in unassigned }
-        # print('cmap =', cmap)
+                 if n1 in k and k.other(n1) in unassigned }
+        #print('cmap =', cmap)
         cpairs = sorted(cmap, key=cmap.get)
-        # print('cpairs =', cpairs)
+        #print('cpairs =', cpairs)
         if len(cpairs) > 0:       n2 = cpairs[0].other(n1)
         elif len(unassigned) > 0: n2 = unassigned.pop()
         else:
             others = set(names)
             others.remove(n1)
             n2 = others.pop()
-        # print('n2 =', n2)
+        #print('n2 =', n2)
         if n2 in unassigned: unassigned.remove(n2)
         pairs.append(Pair(n1, n2))
         latest[Pair(n1, n2)] = day
