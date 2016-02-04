@@ -100,7 +100,6 @@ def assign_pairs(names, latest, day):
     # Pull out oldest pairs.
     pairs = []
     while len(work_pairs) > 0:
-        print(work_pairs)
         pair = work_pairs.pop()
         work_pairs = [p for p in work_pairs if pair[0] not in p]
         work_pairs = [p for p in work_pairs if pair[1] not in p]
@@ -109,16 +108,17 @@ def assign_pairs(names, latest, day):
 
     # If there is an odd number of people, we'll be missing someone.
     # Work out who.
-    left_name = names
-    for i in range(len(pairs)):
-        left_name = [n for n in left_name if n not in pairs[i]]
-    left_name = left_name[0]
+    if len(names) % 2 == 1:
+        left_name = names
+        for i in range(len(pairs)):
+            left_name = [n for n in left_name if n not in pairs[i]]
+        left_name = left_name[0]
 
-    # Get the oldest pair for the missing person.
-    left_pairs = [p for p in left_pairs if left_name in p]
-    pair = left_pairs.pop()
-    pairs.append(pair)
-    latest[pair] = day
+        # Get the oldest pair for the missing person.
+        left_pairs = [p for p in left_pairs if left_name in p]
+        pair = left_pairs.pop()
+        pairs.append(pair)
+        latest[pair] = day
 
     return pairs
 
