@@ -90,7 +90,8 @@ def assign_pairs(names, latest, day):
 
     # Set last meeting times.
     for k, v in latest.items():
-        all_pairs[k] = (v, all_pairs[k][1])
+        if k in all_pairs:
+            all_pairs[k] = (v, all_pairs[k][1])
 
     # Sort by meeting times and tiebreakers.
     work_pairs = sorted(all_pairs.keys(), key=lambda k: all_pairs[k],
