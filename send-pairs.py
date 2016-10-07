@@ -8,7 +8,7 @@ ENDPOINT = open('slack-endpoint.txt').read().replace("\n", '')
 
 def send(t):
     time.sleep(1)
-    requests.post(ENDPOINT, json={ "text": t })
+    requests.post(ENDPOINT + "&text=" + t )
 
 def main():
     if len(sys.argv) != 2:
@@ -22,11 +22,11 @@ def main():
     wb = datetime.strptime(wbstr, '%Y-%m-%d')
     wbtitle = wb.strftime("%d %B %Y")
     if wbtitle.startswith('0'): wbtitle = wbtitle[1:]
-    send("Pair calls for week beginning " + wbtitle)
+    send("@here Pair calls for week beginning " + wbtitle)
     for l in open(pfile):
         n1, n2 = l.split(',')
         n2 = n2.replace("\n", '')
-        send("Call between @{} and @{}".format(n1, n2))
+        send("{} and {}".format(n1, n2))
 
 if __name__ == '__main__':
     main()
