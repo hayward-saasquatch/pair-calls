@@ -11,6 +11,7 @@ def send(t):
     requests.post(ENDPOINT + "&text=" + t )
 
 def main():
+    post = ""
     if len(sys.argv) != 2:
         print('Usage: send-pairs.py <monday-date>')
         sys.exit(1)
@@ -22,11 +23,13 @@ def main():
     wb = datetime.strptime(wbstr, '%Y-%m-%d')
     wbtitle = wb.strftime("%d %B %Y")
     if wbtitle.startswith('0'): wbtitle = wbtitle[1:]
-    send("@here Pair calls for week beginning " + wbtitle)
+    post = post + "<!here|here> Paired calls for the week beginning " + wbtitle + "\n"
     for l in open(pfile):
         n1, n2 = l.split(',')
         n2 = n2.replace("\n", '')
-        send("{} and {}".format(n1, n2))
+        post = post + "{} and {}".format(n1, n2) + "\n"
+        
+    send(post)
 
 if __name__ == '__main__':
     main()
