@@ -68,10 +68,8 @@ def read_latest(names):
 def write_latest(latest):
     with open('latest.txt', 'w') as fp:
         for k, v in latest.items():
-            print('{},{},{}'.format(k[0], k[1], v.strftime('%Y-%m-%d')),
-                  file=fp)
-
-
+            fp.write('{},{},{}\n'.format(k[0], k[1], v.strftime('%Y-%m-%d')))
+                  
 # Assign pairs for calls, attempting to maximise time between calls
 # between a pair.
 
@@ -131,7 +129,7 @@ def write_pairs(pairs, monday):
     with open(f, 'w') as fp:
         for p in pairs:
             print('{},{}'.format(p[0], p[1]))
-            print('{},{}'.format(p[0], p[1]), file=fp)
+            fp.write('{},{}\n'.format(p[0], p[1]))
 
 
 def main():
